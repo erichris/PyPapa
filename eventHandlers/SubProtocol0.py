@@ -148,7 +148,7 @@ def newLogin(Config, package):
     Pass = binascii.b2a_base64(Pass)
     Pass = "pbkdf2_sha256$100000$" + salt + "$" + Pass
     Pass = Pass.replace('\n', '')
-    
+    print Pass
     lista_columnas = ["id"]
     id_username = Config.Database.obtener_registro("auth_user", lista_columnas, "username = '" + str(User) + "'" + " AND " + "password = '" + str(Pass) + "'")
     if(len(id_username) == 0):
