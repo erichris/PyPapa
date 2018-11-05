@@ -139,13 +139,13 @@ def newLogin(Config, package):
     if(len(stored_pass) == 0):
         return {"Status": "1"}
     b = stored_pass[0][0].split('$')
-    salt = b[2]
-    iterations = b[1]
-    encrypt = b[0]
+    salt = str(b[2])
+    iterations = str(b[1])
+    encrypt = str(b[0])
     salt = force_bytes(salt)
-    iterations = 100000
+    #iterations = 100000
     enconde = 'SHA256'
-    Pass = hashlib.pbkdf2_hmac(enconde, Pass, salt, iterations)
+    Pass = hashlib.pbkdf2_hmac(enconde, Pass, salt, int(iterations))
     Pass = binascii.b2a_base64(Pass)
     Pass = encrypt + "$" + iterations + "$" + salt + "$" + Pass
     Pass = Pass.replace('\n', '')
