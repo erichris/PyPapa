@@ -1,0 +1,21 @@
+#Configuracion del servidor
+HOST_SERVER = 192.168.1.58
+#HOST_SERVER = 127.0.0.1
+PORT_SERVER = 27016
+
+# 0.- Offline, 1.-Online 2.-En mantenimiento
+SERVER_STATUS = 1
+
+# 0.- Postgres 1.- Postgres
+DATABASE = 1
+
+#Database information
+DBPORT = 5432
+DBNAME = LaPapa
+DBUSER = postgres
+DBPASS = Nomorelove12
+
+#Others
+CURRENT_VERSION = 0.0.1
+
+
