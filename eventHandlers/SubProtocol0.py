@@ -140,13 +140,14 @@ def newLogin(Config, package):
         return {"Status": "1"}
     b = stored_pass[0][0].split('$')
     salt = b[2]
-    
+    iterations = b[1]
+    encrypt = b[0]
     salt = force_bytes(salt)
     iterations = 100000
     enconde = 'SHA256'
     Pass = hashlib.pbkdf2_hmac(enconde, Pass, salt, iterations)
     Pass = binascii.b2a_base64(Pass)
-    Pass = "pbkdf2_sha256$100000$" + salt + "$" + Pass
+    Pass = encrypt + "$" + iterations + "$" + salt + "$" + Pass
     Pass = Pass.replace('\n', '')
     print Pass
     lista_columnas = ["id"]
