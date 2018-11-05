@@ -1,6 +1,6 @@
 #Configuracion del servidor
 HOST_SERVER = 207.38.86.209
-PORT_SERVER = 12184
+PORT_SERVER = 30822
 
 # 0.- Offline, 1.-Online 2.-En mantenimiento
 SERVER_STATUS = 1
