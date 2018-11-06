@@ -178,8 +178,10 @@ def newLogin(Config, package):
             if(len(Config.Database.obtener_registro("Users", lista_columnas, "PID = " + str(PID))) == 0):
                 break;
         lista_tupla = [["PID", str(PID)], ["ClientID", "'" + User + "'"]]
+        print "1"
         Config.Database.insertar_datos("Users", lista_tupla)
         DB_ID = Config.Database.obtener_registro("Users", ["DB_ID"], "PID = %i" % PID)[0][0]
+        print "2"
         lista_tupla = [["DB_ID", DB_ID], 
                        ["NombreEmpresa", "'SIN NOMBRE'"], 
                        ["NombreUsuario", "'SIN NOMBRE'"],
@@ -199,6 +201,7 @@ def newLogin(Config, package):
                        ["OfreceComida", False],
                        ]
         Config.Database.insertar_datos("DatosPersonales", lista_tupla)
+        print "3"
         lista_tupla = [["DB_ID", DB_ID],
                    ["PROFILEPIC", "'N'"],
                    ["BACKGROUNDPIC", "'N'"],
@@ -206,6 +209,7 @@ def newLogin(Config, package):
                    ["HASBACKGROUND", False]
                    ]
         Config.Database.insertar_datos("Images", lista_tupla)
+        print "4"
         lista_tupla = [["DB_ID", DB_ID], 
                        ["Platillos", "'Chilaquiles|Enchiladas'"],
                        ["PlatillosPrecio", "'35|40'"],
@@ -217,6 +221,7 @@ def newLogin(Config, package):
                        ["HoraCierre", "'%s'" % datetime.time(12,0,0)]
                        ]
         Config.Database.insertar_datos("Desayunos", lista_tupla)
+        print "5"
         lista_tupla = [["DB_ID", DB_ID], 
                        ["Entrada", "'Consome|Crema de zanahoria'"],
                        ["PlatoFuerte", "'Pechuga de pollo|Enfrijoladas'"],
@@ -229,6 +234,7 @@ def newLogin(Config, package):
                        ["HoraCierre", "'%s'" % datetime.time(18,0,0)]
                        ]
         Config.Database.insertar_datos("Comidas", lista_tupla)
+        print "6"
         return {"Status": "0", "PID": str(PID)}
 
 

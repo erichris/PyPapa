@@ -19,7 +19,6 @@ class MiTCPHandler(SocketServer.StreamRequestHandler):
 			try:
 				package = self.rfile.readline().strip()
 				#package = self.request.recv(4000)
-				print package
 				if(package != ""):
 					package = loads(package)
 					print package
