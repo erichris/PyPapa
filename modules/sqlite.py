@@ -142,8 +142,8 @@ class Database():
 if __name__ == "__main__":
     db = Database()
     
-    db.crear_conexion("5432", "LaPapa", "postgres", "Nomorelove12")
-    #db.crear_conexion("5432", "lapapa", "hakapapa", "Lapapa2019")
+    #db.crear_conexion("5432", "LaPapa", "postgres", "Nomorelove12")
+    db.crear_conexion("5432", "lapapa", "hakapapa", "Lapapa2019")
     
     #db.cursor.execute("UPDATE Comidas set Guarnicion = 'Arroz|Frijoles|Spagethi|Dummy' where DB_ID = 2");
     
