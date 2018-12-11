@@ -15,6 +15,7 @@ class Database():
         entrada = "port= "+puerto+" dbname= "+nombredb+" user= "+usuario+" password= "+password
         self.connection = psycopg2.connect(entrada)
         self.cursor = self.connection.cursor()
+        self.command = ""
         
     def crear_tabla(self, nombre_tabla, lista_tupla):
         #nombre_tabla = "Nombre de la tabla"
@@ -24,7 +25,7 @@ class Database():
         #lista_tupla = [["Id", "INT PRIMARY KEY", true]]
         comando = "DROP TABLE IF EXISTS " + nombre_tabla
         self.cursor.execute (comando)
-        command = "CREATE TABLE %s" % nombre_tabla
+        self.command = "CREATE TABLE %s" % nombre_tabla
         table = "("
         for time in range(0, len(lista_tupla)):
             table += lista_tupla[time][0] + " "
@@ -36,8 +37,9 @@ class Database():
             else:
                 table += ", "
         table += ")"
-        command += table
-        self.cursor.execute(command)
+        self.command += table
+        print self.command
+        self.cursor.execute(self.command)
         self.connection.commit()
 
 
@@ -45,7 +47,7 @@ class Database():
         #nombre_tabla = "Nombre de la tabla"
         #lista_columnas = ["Id", "Nombre", "Edad", "Direccion", "Salario"]
         #lista_valor = ["INT PRIMARY KEY", "TEXT", "INT", "CHAR(50)", "REAL"]
-        command = "INSERT INTO "
+        self.command = "INSERT INTO "
         table = nombre_tabla
         table += "("
         for time in range(0, len(lista_columnas)):
@@ -60,13 +62,14 @@ class Database():
                 table += ", "
             else:
                 table += ")"
-        command += table
+        self.command += table
         #print command
-        self.cursor.execute(command)
+        print self.command
+        self.cursor.execute(self.command)
         self.connection.commit()
         
     def obtener_registros(self, nombre_tabla, lista_columnas):
-        command = "SELECT "
+        self.command = "SELECT "
         table = ""
         for time in range(0, len(lista_columnas)):
             table += lista_columnas[time]
@@ -75,8 +78,9 @@ class Database():
             else:
                 table += " from "
         table += nombre_tabla
-        command += table
-        self.cursor.execute(command)
+        self.command += table
+        print self.command
+        self.cursor.execute(self.command)
         registros = []
         time = 0
         for registro in self.cursor:
@@ -90,26 +94,28 @@ class Database():
         #nombre_tabla = "Nombre de tabla"
         #colum_value = "nombre = 'Christian'"
         #ID_value = "ID = 001"
-        command = "UPDATE "
+        self.command = "UPDATE "
         table = nombre_tabla + " set "
         table += colum_value
         table += " where "
         table += ID_value
-        command += table
-        self.cursor.execute(command)
+        self.command += table
+        print self.command
+        self.cursor.execute(self.command)
         self.connection.commit()
         
     def eliminar_registro(self, nombre_tabla, ID_value):
-        command = "DELETE from "
+        self.command = "DELETE from "
         table = nombre_tabla
         table += " where "
         table += ID_value
-        command += table
-        self.cursor.execute(command)
+        self.command += table
+        print self.command
+        self.cursor.execute(self.command)
         self.connection.commit()
         
     def obtener_registro(self, nombre_tabla, lista_columnas, ID_value):
-        command = "SELECT "
+        self.command = "SELECT "
         table = ""
         for time in range(0, len(lista_columnas)):
             table += lista_columnas[time]
@@ -120,9 +126,10 @@ class Database():
         table += nombre_tabla
         table += " where "
         table += ID_value
-        command += table
+        self.command += table
         #print command
-        self.cursor.execute(command)
+        print self.command
+        self.cursor.execute(self.command)
         registros = []
         time = 0
         for registro in self.cursor:
@@ -134,8 +141,9 @@ class Database():
         
 if __name__ == "__main__":
     db = Database()
-    #db.crear_conexion("5432", "LaPapa", "postgres", "Nomorelove12")
-    db.crear_conexion("5432", "lapapa", "hakapapa", "Lapapa2019")
+    
+    db.crear_conexion("5432", "LaPapa", "postgres", "Nomorelove12")
+    #db.crear_conexion("5432", "lapapa", "hakapapa", "Lapapa2019")
     
     #db.cursor.execute("UPDATE Comidas set Guarnicion = 'Arroz|Frijoles|Spagethi|Dummy' where DB_ID = 2");
     

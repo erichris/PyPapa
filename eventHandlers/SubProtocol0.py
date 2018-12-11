@@ -135,21 +135,28 @@ def newLogin(Config, package):
     Pass = package['Pass']
     Pass = force_bytes(Pass)
     lista_columnas = ["password"]
+    print 1
     stored_pass = Config.Database.obtener_registro("auth_user", lista_columnas, "username = '" + str(User) + "'")
+    print 2
     if(len(stored_pass) == 0):
         return {"Status": "1"}
+    print 3
     b = stored_pass[0][0].split('$')
+    print 4
     salt = str(b[2])
+    print 5
     iterations = str(b[1])
     encrypt = str(b[0])
     salt = force_bytes(salt)
     #iterations = 100000
     enconde = 'SHA256'
+    print 6
     Pass = hashlib.pbkdf2_hmac(enconde, Pass, salt, int(iterations))
     Pass = binascii.b2a_base64(Pass)
+    print 7
     Pass = encrypt + "$" + iterations + "$" + salt + "$" + Pass
     Pass = Pass.replace('\n', '')
-    print Pass
+    print 8
     lista_columnas = ["id"]
     id_username = Config.Database.obtener_registro("auth_user", lista_columnas, "username = '" + str(User) + "'" + " AND " + "password = '" + str(Pass) + "'")
     if(len(id_username) == 0):

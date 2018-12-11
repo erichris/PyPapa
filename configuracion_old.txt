@@ -1,6 +1,6 @@
 #Configuracion del servidor
-HOST_SERVER = 192.168.1.58
-#HOST_SERVER = 127.0.0.1
+#HOST_SERVER = 192.168.1.58
+HOST_SERVER = 127.0.0.1
 PORT_SERVER = 27016
 
 # 0.- Offline, 1.-Online 2.-En mantenimiento
