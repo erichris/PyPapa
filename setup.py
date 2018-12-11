@@ -11,7 +11,7 @@ class Setup():
     def __init__(self):
         print ("Se inicio Setup")
         
-        self.configuracionFile = "configuracion_old.txt"
+        self.configuracionFile = "configuracion.txt"
         
         self.iniciar_ficheros()
         self.iniciar_database()
