@@ -9,7 +9,8 @@
                     ##################################################
                     
 #Biblioteca creada para el manejo de ficheros
-
+import random
+import string
 class Fichero():
     def __init__(self):
         self.lectura = "r"
@@ -54,3 +55,45 @@ class Fichero():
         self.cerrar_fichero(fichero_nuevo)
         self.cerrar_fichero(fichero_viejo)
         
+ 
+lote = 0;
+codigo = 0;
+id = "PRO"
+doc = Fichero();
+fichero = doc.abrir_fichero("CodigosP00.txt", doc.escritura)
+ 
+for i in range(0, 1000):
+    fichero.write( id + '%02d' % lote + '%03d' % codigo  + " " + "".join( [random.choice(string.hexdigits) for i in xrange(8)] ) + "\n")
+    codigo += 1
+doc.cerrar_fichero(fichero)
+lote = 1
+codigo = 0;
+fichero = doc.abrir_fichero("CodigosP01.txt", doc.escritura)
+for i in range(0, 1000):
+    fichero.write( id + '%02d' % lote + '%03d' % codigo  + " " + "".join( [random.choice(string.hexdigits) for i in xrange(8)] ) + "\n")
+    codigo += 1
+doc.cerrar_fichero(fichero)
+lote = 2
+codigo = 0;
+fichero = doc.abrir_fichero("CodigosP02.txt", doc.escritura)
+for i in range(0, 1000):
+    fichero.write( id + '%02d' % lote + '%03d' % codigo  + " " + "".join( [random.choice(string.hexdigits) for i in xrange(8)] ) + "\n")
+    codigo += 1
+doc.cerrar_fichero(fichero)
+lote = 3
+codigo = 0;
+fichero = doc.abrir_fichero("CodigosP03.txt", doc.escritura)
+for i in range(0, 1000):
+    fichero.write( id + '%02d' % lote + '%03d' % codigo  + " " + "".join( [random.choice(string.hexdigits) for i in xrange(8)] ) + "\n")
+    codigo += 1
+doc.cerrar_fichero(fichero)
+lote = 4
+codigo = 0;
+fichero = doc.abrir_fichero("CodigosP04.txt", doc.escritura)
+for i in range(0, 1000):
+    fichero.write( id + '%02d' % lote + '%03d' % codigo  + " " + "".join( [random.choice(string.hexdigits) for i in xrange(8)] ) + "\n")
+    codigo += 1
+doc.cerrar_fichero(fichero)
+
+
+

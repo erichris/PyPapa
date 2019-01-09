@@ -10,7 +10,7 @@ def subProtocolHandler0(Config, package):
     elif(package['SubProtocol'] == '1'): #Login/Register Comensal
         return loginComensal(Config, package)
     elif(package['SubProtocol'] == '2'): #Login/Register NewFonda
-        return newLogin(Config, package)
+        return newLoginMeCagoEnDiosSiVuelveACambiarAlgoAqui(Config, package) #newLogin(Config, package)
     
 def login(Config, package):
     #Verificar si existe
@@ -244,7 +244,112 @@ def newLogin(Config, package):
         print "6"
         return {"Status": "0", "PID": str(PID)}
 
-
+def newLoginMeCagoEnDiosSiVuelveACambiarAlgoAqui(Config, package):
+    #Verificar si existe
+    User = package['Username']
+    Pass = package['Pass']
+    #Pass = force_bytes(Pass)
+    #lista_columnas = ["password"]
+    stored_pass = Config.Database.obtener_registro("auth_user", lista_columnas, "username = '" + str(User) + "'")
+    if(len(stored_pass) == 0):
+        return {"Status": "1"}
+    #b = stored_pass[0][0].split('$')
+    #salt = str(b[2])
+    #iterations = str(b[1])
+    #encrypt = str(b[0])
+    #salt = force_bytes(salt)
+    #iterations = 100000
+    #enconde = 'SHA256'
+    #Pass = hashlib.pbkdf2_hmac(enconde, Pass, salt, int(iterations))
+    #Pass = binascii.b2a_base64(Pass)
+    #Pass = encrypt + "$" + iterations + "$" + salt + "$" + Pass
+    #Pass = Pass.replace('\n', '')
+    lista_columnas = ["id"]
+    id_username = Config.Database.obtener_registro("auth_user", lista_columnas, "username = '" + str(User) + "'" + " AND " + "password = '" + str(Pass) + "'")
+    if(len(id_username) == 0):
+        return {"Status": "1"}
+    
+    
+    ClientID = User
+    lista_columnas = ["DB_ID"]
+    DB_ID = Config.Database.obtener_registro("Users", lista_columnas, "ClientID = '" + str(ClientID) + "'")
+    #Logear
+    if(len(DB_ID) > 0):
+        PID = 0;
+        while(True):
+            PID = random.randint(0,1000000);
+            lista_columnas = ["DB_ID"]
+            if(len(Config.Database.obtener_registro("Users", lista_columnas, "PID = " + str(PID))) == 0):
+                break;
+        Config.Database.actualizar_registro("Users", "PID = " + str(PID), "DB_ID = %s" % str(DB_ID[0][0]))
+        return {"Status": "0", "PID": str(PID)}
+    #Registrar
+    if(len(DB_ID) == 0):
+        PID = 0;
+        while(True):
+            PID = random.randint(0,1000000);
+            lista_columnas = ["DB_ID"]
+            if(len(Config.Database.obtener_registro("Users", lista_columnas, "PID = " + str(PID))) == 0):
+                break;
+        lista_tupla = [["PID", str(PID)], ["ClientID", "'" + User + "'"]]
+        print "1"
+        Config.Database.insertar_datos("Users", lista_tupla)
+        DB_ID = Config.Database.obtener_registro("Users", ["DB_ID"], "PID = %i" % PID)[0][0]
+        print "2"
+        lista_tupla = [["DB_ID", DB_ID], 
+                       ["NombreEmpresa", "'SIN NOMBRE'"], 
+                       ["NombreUsuario", "'SIN NOMBRE'"],
+                       ["Direccion", "'SIN DIRECCION'"],
+                       ["Correo", "'SIN CORREO'"],
+                       ["CalifServicio", "'0'"],
+                       ["CalifLimpieza", "'0'"],
+                       ["CalifComida", "'0'"],
+                       ["Longitud", 0],
+                       ["Latitud", 0],
+                       ["CalifServicioVotos", "'0'"],
+                       ["CalifLimpiezaVotos", "'0'"],
+                       ["CalifComidaVotos", "'0'"],
+                       ["AceptaEfectivo", False],
+                       ["AceptaTarjeta", False],
+                       ["OfreceDesayuno", False],
+                       ["OfreceComida", False],
+                       ]
+        Config.Database.insertar_datos("DatosPersonales", lista_tupla)
+        print "3"
+        lista_tupla = [["DB_ID", DB_ID],
+                   ["PROFILEPIC", "'N'"],
+                   ["BACKGROUNDPIC", "'N'"],
+                   ["HASPROFILE", False],
+                   ["HASBACKGROUND", False]
+                   ]
+        Config.Database.insertar_datos("Images", lista_tupla)
+        print "4"
+        lista_tupla = [["DB_ID", DB_ID], 
+                       ["Platillos", "'Chilaquiles|Enchiladas'"],
+                       ["PlatillosPrecio", "'35|40'"],
+                       ["Extras", "'Extra1|Extra2'"],
+                       ["ExtrasPrecio", "'5|10'"],
+                       ["Incluye", "'Fruta|Cafe de olla|Te o jugo'"],
+                       ["IncluyeBool", "'0|0|0'"],
+                       ["HoraApertura", "'%s'" % datetime.time(8,0,0)],
+                       ["HoraCierre", "'%s'" % datetime.time(12,0,0)]
+                       ]
+        Config.Database.insertar_datos("Desayunos", lista_tupla)
+        print "5"
+        lista_tupla = [["DB_ID", DB_ID], 
+                       ["Entrada", "'Consome|Crema de zanahoria'"],
+                       ["PlatoFuerte", "'Pechuga de pollo|Enfrijoladas'"],
+                       ["PlatoFuertePrecio", "'50|45'"],
+                       ["Guarnicion", "'Arroz|Frijoles|Spagethi'"],
+                       ["CantidadGuarniciones", 2],
+                       ["Incluye", "'Agua|Tortillas|Postre'"],
+                       ["IncluyeBool", "'0|0|0'"],
+                       ["HoraApertura", "'%s'" % datetime.time(13,0,0)],
+                       ["HoraCierre", "'%s'" % datetime.time(18,0,0)]
+                       ]
+        Config.Database.insertar_datos("Comidas", lista_tupla)
+        print "6"
+        return {"Status": "0", "PID": str(PID)}
 
 def force_bytes(s, encoding='utf-8', strings_only=False, errors='strict'):
     """
