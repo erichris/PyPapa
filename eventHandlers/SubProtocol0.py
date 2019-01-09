@@ -250,9 +250,11 @@ def newLoginMeCagoEnDiosSiVuelveACambiarAlgoAqui(Config, package):
     Pass = package['Pass']
     #Pass = force_bytes(Pass)
     #lista_columnas = ["password"]
+    print 3
     stored_pass = Config.Database.obtener_registro("auth_user", lista_columnas, "username = '" + str(User) + "'")
     if(len(stored_pass) == 0):
         return {"Status": "1"}
+    print 2
     #b = stored_pass[0][0].split('$')
     #salt = str(b[2])
     #iterations = str(b[1])
@@ -269,12 +271,13 @@ def newLoginMeCagoEnDiosSiVuelveACambiarAlgoAqui(Config, package):
     if(len(id_username) == 0):
         return {"Status": "1"}
     
-    
+    print 1
     ClientID = User
     lista_columnas = ["DB_ID"]
     DB_ID = Config.Database.obtener_registro("Users", lista_columnas, "ClientID = '" + str(ClientID) + "'")
     #Logear
     if(len(DB_ID) > 0):
+        print 4
         PID = 0;
         while(True):
             PID = random.randint(0,1000000);
@@ -285,6 +288,7 @@ def newLoginMeCagoEnDiosSiVuelveACambiarAlgoAqui(Config, package):
         return {"Status": "0", "PID": str(PID)}
     #Registrar
     if(len(DB_ID) == 0):
+        print 5
         PID = 0;
         while(True):
             PID = random.randint(0,1000000);
