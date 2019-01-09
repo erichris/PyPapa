@@ -249,7 +249,7 @@ def newLoginMeCagoEnDiosSiVuelveACambiarAlgoAqui(Config, package):
     User = package['Username']
     Pass = package['Pass']
     #Pass = force_bytes(Pass)
-    #lista_columnas = ["password"]
+    lista_columnas = ["password"]
     print 3
     stored_pass = Config.Database.obtener_registro("auth_user", lista_columnas, "username = '" + str(User) + "'")
     if(len(stored_pass) == 0):
